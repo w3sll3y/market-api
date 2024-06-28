@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model List {
+  id          String   @id @db.Uuid
+  createdat   DateTime @default(now()) @db.Timestamp(6)
+  description String?
+  items       Json[]
+  statuslist  Boolean
+  receipt     String?  @db.Uuid
+  receipts    Receipt? @relation(fields: [receipt], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("lists")
+}
+
+model Receipt {
+  id          String   @id @db.Uuid
+  createdat   DateTime @default(now()) @db.Timestamp(6)
+  image       String?
+  description String?
+  lists       List[]
+
+  @@map("receipts")
+}
+
+model User {
+  id        String   @id @db.Uuid
+  address   Json
+  photo     String?
+  name      String
+  username  String   @unique
+  password  String
+  receipts  String[] @db.Uuid
+  friends   String[] @db.Uuid
+  lists     String[] @db.Uuid
+  email     String   @unique
+  createdat DateTime @default(now()) @db.Timestamp(6)
+
+  @@map("users")
+}
