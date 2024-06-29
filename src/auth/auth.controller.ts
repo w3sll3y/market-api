@@ -10,6 +10,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @UseGuards(LocalAuthGuard)
   async login() {
+    return 'realizar login'
     // return this.authService.login();
   }
 }
