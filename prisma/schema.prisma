@@ -10,10 +10,11 @@ datasource db {
 model List {
   id          String   @id @db.Uuid
   createdat   DateTime @default(now()) @db.Timestamp(6)
-  description String?
+  description String?  @db.VarChar
   items       Json[]
   statuslist  Boolean
   receipt     String?  @db.Uuid
+  createdby   String   @db.Uuid
   receipts    Receipt? @relation(fields: [receipt], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@map("lists")
@@ -22,8 +23,9 @@ model List {
 model Receipt {
   id          String   @id @db.Uuid
   createdat   DateTime @default(now()) @db.Timestamp(6)
-  image       String?
-  description String?
+  image       String?  @db.VarChar
+  description String?  @db.VarChar
+  createdby   String   @db.Uuid
   lists       List[]
 
   @@map("receipts")
@@ -32,14 +34,14 @@ model Receipt {
 model User {
   id        String   @id @db.Uuid
   address   Json
-  photo     String?
-  name      String
-  username  String   @unique
-  password  String
+  photo     String?  @db.VarChar
+  name      String   @db.VarChar
+  username  String   @unique @db.VarChar
+  password  String   @db.VarChar
   receipts  String[] @db.Uuid
   friends   String[] @db.Uuid
   lists     String[] @db.Uuid
-  email     String   @unique
+  email     String   @unique @db.VarChar
   createdat DateTime @default(now()) @db.Timestamp(6)
 
   @@map("users")

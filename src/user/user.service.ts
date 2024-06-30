@@ -13,6 +13,7 @@ export class UserService {
     const data = {
       id: uuidv4(),
       ...createUserDto,
+      username: `${createUserDto.name}${Date.now()}`,
       address: [],
       password: await bcrypt.hash(createUserDto.password, 10),
     }
