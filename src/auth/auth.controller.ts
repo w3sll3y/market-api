@@ -2,6 +2,7 @@ import { Controller, HttpCode, HttpStatus, Post, Request, UseGuards } from '@nes
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { AuthRequest } from './models/AuthRequest';
+import { IsPublic } from './decorators/is-public.decorator';
 
 @Controller()
 export class AuthController {
