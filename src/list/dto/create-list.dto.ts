@@ -11,4 +11,7 @@ export class CreateListDto extends List {
 
   @IsArray()
   items: Array<ItemList>;
+
+  @IsString()
+  receipt?: string;
 }

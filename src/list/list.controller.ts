@@ -25,8 +25,8 @@ export class ListController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateListDto: UpdateListDto) {
-    return this.listService.update(+id, updateListDto);
+  update(@Param('id') id: string, @Body() updateListDto: UpdateListDto, @CurrentUser() user: User) {
+    return this.listService.update(id, updateListDto, user.id);
   }
 
   @Delete(':id')
