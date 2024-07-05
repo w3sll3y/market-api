@@ -2,24 +2,26 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ListService } from './list.service';
 import { CreateListDto } from './dto/create-list.dto';
 import { UpdateListDto } from './dto/update-list.dto';
+import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
+import { User } from 'src/user/entities/user.entity';
 
 @Controller('list')
 export class ListController {
-  constructor(private readonly listService: ListService) {}
+  constructor(private readonly listService: ListService) { }
 
   @Post()
-  create(@Body() createListDto: CreateListDto) {
-    return this.listService.create(createListDto);
+  create(@Body() createListDto: CreateListDto, @CurrentUser() user: User) {
+    return this.listService.create(createListDto, user.id);
   }
 
   @Get()
-  findAll() {
-    return this.listService.findAll();
+  findAll(@CurrentUser() user: User) {
+    return this.listService.findAll(user.id);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.listService.findOne(+id);
+  findOne(@Param('id') id: string, @CurrentUser() user: User) {
+    return this.listService.findOne(id, user.id);
   }
 
   @Patch(':id')
@@ -28,7 +30,7 @@ export class ListController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.listService.remove(+id);
+  remove(@Param('id') id: string, @CurrentUser() user: User) {
+    return this.listService.remove(id, user.id);
   }
 }
