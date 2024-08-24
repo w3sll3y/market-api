@@ -19,6 +19,11 @@ export class ListController {
     return this.listService.findAll(user.id);
   }
 
+  @Get('/open')
+  findOpenOne(@CurrentUser() user: User) {
+    return this.listService.findOpenOne(user.id);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string, @CurrentUser() user: User) {
     return this.listService.findOne(id, user.id);

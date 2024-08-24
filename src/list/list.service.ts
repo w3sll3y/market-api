@@ -52,6 +52,21 @@ export class ListService {
     return data
   }
 
+  async findOpenOne(createdby: string) {
+    console.log('hereee====')
+    const data = await this.prisma.list.findFirst({
+      where: {
+        statuslist: false,
+        createdby,
+      }
+    });
+
+    if (data === null) {
+      throw new NotFoundException('List Not Found')
+    }
+    return data
+  }
+
   async update(id: string, updateListDto: UpdateListDto, createdby: string) {
     const listExists = await this.prisma.list.findUnique({
       where: { id },
